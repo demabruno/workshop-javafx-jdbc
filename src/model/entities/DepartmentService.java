@@ -25,4 +25,8 @@ public class DepartmentService {
 		}
 	}
 	
+	public void removeEntity(Department department) {
+		dao.delete(department);
+	}
+	
 }

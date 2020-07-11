@@ -157,16 +157,16 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			DB.closeResultSet(rs);
 		}
 	}
-/*
+
 	@Override
-	public void delete(Integer id) {
+	public void delete (Department department) {
 		PreparedStatement st = null;
 		try
 		{   
-			st = conn.prepareStatement("DELETE FROM seller " + 
+			st = conn.prepareStatement("DELETE FROM DEPARTMENT " + 
 					"WHERE Id = ?");
 			
-			st.setInt(1, id);
+			st.setInt(1, department.getId());
 
 			st.executeUpdate();
 			
@@ -179,7 +179,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		}
 		
 	}
-
+	/*
 	@Override
 	public List<Seller> findByDepartment(Department department) {
 		PreparedStatement st = null;
@@ -227,10 +227,4 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
