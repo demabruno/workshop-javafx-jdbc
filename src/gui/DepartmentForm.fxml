@@ -44,7 +44,7 @@
                </font>
             </Label>
             <TextField fx:id="textBoxId" editable="false" GridPane.columnIndex="1" />
-            <TextField fx:id="texBoxName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="textBoxName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBotaoSalvar" prefHeight="30.0" prefWidth="100.0" text="Save">
