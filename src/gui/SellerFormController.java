@@ -1,9 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -116,7 +118,27 @@ public class SellerFormController implements Initializable {
 			exceptionError.addError("name", "field can't be empty");
 		}
 		dep.setName(textBoxName.getText());
-
+		
+		if (textBoxEmail.getText() == null || "".equals(textBoxEmail.getText().trim())) {
+			exceptionError.addError("email", "field can't be empty");
+		}
+		dep.setEmail(textBoxEmail.getText());
+		
+		if (textBoxBaseSalary.getText() == null || "".equals(textBoxBaseSalary.getText().trim())) {
+			exceptionError.addError("baseSalary", "field can't be empty");
+		}
+		dep.setBaseSalary(Utils.tryParseToDouble(textBoxBaseSalary.getText()));
+		
+		if (dpBirthDate.getValue() == null) {
+			exceptionError.addError("dpBirthDate", "field can't be empty");
+		}
+		else {
+			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
+			dep.setBirthDate(Date.from(instant));
+		}
+		
+		dep.setDepartent(comboboxDepartment.getValue());
+		
 		if (exceptionError.getErrors().size() > 0) {
 			throw exceptionError;
 		}
@@ -171,6 +193,8 @@ public class SellerFormController implements Initializable {
 		else {
 			comboboxDepartment.setValue(entity.getDepartent());
 		}
+		
+		
 	}
 
 	public void subscribeDataChangeListner(DataChangeListner dataChangeListner) {
@@ -179,9 +203,12 @@ public class SellerFormController implements Initializable {
 
 	private void setErrorMsg(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
-		if (fields.contains("name")) {
-			labelErrName.setText(errors.get("name"));
-		}
+		
+		labelErrName.setText(fields.contains("name") ? errors.get("name") : "");
+		labelErrEmail.setText(fields.contains("email") ? errors.get("email") : "");
+		labelErrBirthDate.setText(fields.contains("birthDate") ? errors.get("birthDate") : "");
+		labelErrBaseSalary.setText(fields.contains("baseSalary") ? errors.get("baseSalary") : "");
+		
 	}
 
 	public void loadAssociatedObjects() {
