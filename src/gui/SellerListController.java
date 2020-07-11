@@ -74,7 +74,7 @@ public class SellerListController implements Initializable, DataChangeListner {
 		// Retorna o stage de onde partiu o evento (clique do botão)
 		Stage parentStage = Utils.currentStage(event);
 		Seller obj = new Seller();
-		//createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
+		createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
 	}
 
 	public void setSellerService(SellerService service) {
@@ -117,7 +117,7 @@ public class SellerListController implements Initializable, DataChangeListner {
 		initRemoveButtons();
 	}
 
-	/*public void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
+	public void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane;
@@ -142,7 +142,7 @@ public class SellerListController implements Initializable, DataChangeListner {
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
-	}*/
+	}
 
 	@Override
 	public void onDataChanged() {
@@ -163,9 +163,9 @@ public class SellerListController implements Initializable, DataChangeListner {
 					return;
 				}
 				setGraphic(button);
-				//button.setOnAction(
+				button.setOnAction(
 						// Abrea tela de "cadastro" ao clicar no botão edit
-					//	event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
+						event -> createDialogForm(obj, "/gui/SellerForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}
