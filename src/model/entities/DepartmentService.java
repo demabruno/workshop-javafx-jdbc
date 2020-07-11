@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.application.Department;
+import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 
 public class DepartmentService {
+
+	private DepartmentDao dao = DaoFactory.createDepartmentDao();
+	
 	public List<Department> findAll(){
-		List<Department> listaDepartamentos = new ArrayList();
-		listaDepartamentos.add(new Department(1, "Almoxarifado"));
-		listaDepartamentos.add(new Department(2, "Contabilidade"));
-		listaDepartamentos.add(new Department(3, "Auditoria"));
-		listaDepartamentos.add(new Department(4, "TI"));
-		
-		return listaDepartamentos;
+		return dao.findAll();
 	}
 	
 	
