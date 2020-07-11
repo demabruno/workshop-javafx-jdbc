@@ -1,8 +1,13 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import gui.listeners.DataChangeListner;
 import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.event.ActionEvent;
@@ -13,12 +18,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.application.Department;
 import model.entities.DepartmentService;
+import model.exceptions.ValidationException;
 
 public class DepartmentFormController implements Initializable{
 
 	private Department entity;
 	
 	private DepartmentService service;
+	
+	private List<DataChangeListner> dataChangeListners = new ArrayList();
 	
 	@FXML
 	private TextField textBoxId;
@@ -43,16 +51,39 @@ public class DepartmentFormController implements Initializable{
 		if (service == null) {
 			throw new IllegalStateException("Service is null");
 		}
-		entity = getFormData();
-		service.saveOrUpdate(entity);
-		Utils.currentStage(event).close();
+		try {
+			entity = getFormData();
+			service.saveOrUpdate(entity);
+			notifyDataChangeListners();
+			Utils.currentStage(event).close();
+		}
+		catch(ValidationException e) {
+			setErrorMsg(e.getErrors());
+		}
 		
 	}
 	
-	private Department getFormData() {
+	private void notifyDataChangeListners() {
+		for(DataChangeListner dcl : dataChangeListners) {
+			dcl.onDataChanged();
+		}
+		
+	}
+
+	private Department getFormData() throws ValidationException {
+		ValidationException exceptionError = new ValidationException("Validation Exception");
 		Department dep = new Department();
 		dep.setId(Utils.tryParseToInt(textBoxId.getText()));
+		
+		if(textBoxName.getText() == null || "".equals(textBoxName.getText().trim())){
+			exceptionError.addError("name", "field can't be empty");
+		}
 		dep.setName(textBoxName.getText());
+		
+		if (exceptionError.getErrors().size() > 0) {
+			throw exceptionError;
+		}
+		
 		return dep;
 	}
 
@@ -85,6 +116,17 @@ public class DepartmentFormController implements Initializable{
 		}
 		textBoxId.setText(String.valueOf(entity.getId()));
 		textBoxName.setText(entity.getName());
+	}
+	
+	public void subscribeDataChangeListner(DataChangeListner dataChangeListner) {
+		dataChangeListners.add(dataChangeListner);
+	}
+	
+	private void setErrorMsg(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		if (fields.contains("name")) {
+			labelErrName.setText(errors.get("name"));
+		}
 	}
 
 }

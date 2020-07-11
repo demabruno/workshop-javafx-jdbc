@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listeners.DataChangeListner;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 import model.application.Department;
 import model.entities.DepartmentService;
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListner {
 
 	// private DepartmentService service = new DepartmentService();
 	// Não irá instanciar direto, mas sim pelo método setDepartmentService. Isso irá
@@ -98,6 +99,9 @@ public class DepartmentListController implements Initializable {
 			DepartmentFormController controller = loader.getController();
 			controller.setDepartment(obj);
 			controller.setDepartmentService(service);
+			//Padrão de projeto Observer
+			//Usado para atualizar a lista após salvar um item novo.
+			controller.subscribeDataChangeListner(this); 
 			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
@@ -111,6 +115,11 @@ public class DepartmentListController implements Initializable {
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChanged() {
+		updateTableView();
 	}
 
 }
