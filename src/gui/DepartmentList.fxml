@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="422.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentListController">
+<VBox prefHeight="368.0" prefWidth="569.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DepartmentListController">
    <children>
       <Label text="Department List">
          <font>
@@ -24,10 +24,11 @@
           <Button fx:id="btnNewDepartment" mnemonicParsing="false" onAction="#btnNewDepartmentAction" text="New" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewDepartment" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewDepartment" prefHeight="206.0" prefWidth="371.0">
         <columns>
           <TableColumn fx:id="tableColumId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="tableColumName" prefWidth="451.0" text="Name" />
+          <TableColumn fx:id="tableColumName" prefWidth="376.0" text="Name" />
+            <TableColumn fx:id="tableColumEdit" prefWidth="150.0" text="Column X" />
         </columns>
       </TableView>
    </children>
