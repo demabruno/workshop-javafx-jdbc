@@ -24,25 +24,21 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 	public DepartmentDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
-	/*
+	
 	@Override
-	public void insert(Seller obj) {
+	public void insert(Department obj) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try
 		{   
-			st = conn.prepareStatement("INSERT INTO SELLER " +
-					"(Name, Email, BirthDate, BaseSalary, DepartmentId) " +
+			st = conn.prepareStatement("INSERT INTO DEPARTMENT " +
+					"(Name) " +
 					"VALUES " +
-					"(?, ?, ?, ?, ?)",
+					"(?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getName());
-			st.setString(2, obj.getEmail());
-			st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
-			st.setDouble(4, obj.getBaseSalary());
-			st.setInt(5, obj.getDepartent().getId());
-				
+							
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0)
 			{
@@ -65,22 +61,17 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 	}
 
 	@Override
-	public void update(Seller obj) {
+	public void update(Department obj) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try
 		{   
-			st = conn.prepareStatement("UPDATE seller " + 
-					"SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " + 
+			st = conn.prepareStatement("UPDATE DEPARTMENT " + 
+					"SET Name = ? " + 
 					"WHERE Id = ?");
 			
 			st.setString(1, obj.getName());
-			st.setString(2, obj.getEmail());
-			st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
-			st.setDouble(4, obj.getBaseSalary());
-			st.setInt(5, obj.getDepartent().getId());
-			st.setInt(6, obj.getId());
-				
+							
 			st.executeUpdate();
 			
 		}
@@ -93,7 +84,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 		}
 		
 	}
-
+	/*
 	@Override
 	public Seller findById(Integer id) {
 		PreparedStatement st = null;
@@ -229,16 +220,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			dep.setName(rs.getString("Name"));
 		return dep;
 	}
-	@Override
-	public void insert(Department obj) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void update(Department obj) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	@Override
 	public Department findById(Integer id) {
 		// TODO Auto-generated method stub
