@@ -157,41 +157,36 @@ public class DepartmentListController implements Initializable, DataChangeListne
 	}
 
 	private void initRemoveButtons() {
-		try {
-			tableColumRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-			tableColumRemove.setCellFactory(param -> new TableCell<Department, Department>() {
-				private final Button button = new Button("remove");
+		tableColumRemove.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumRemove.setCellFactory(param -> new TableCell<Department, Department>() {
+			private final Button button = new Button("remove");
 
-				@Override
-				protected void updateItem(Department obj, boolean empty) {
-					super.updateItem(obj, empty);
-					if (obj == null) {
-						setGraphic(null);
-						return;
-					}
-					setGraphic(button);
-					button.setOnAction(event -> removeEntity(obj));
+			@Override
+			protected void updateItem(Department obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
 				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
 
-			});
-		} catch (DbIntegrityException dbe) {
-			Alerts.showAlert("DB Exception", "Error on remove Department", dbe.getMessage(), AlertType.ERROR);
-		}
+		});
 	}
 
 	private void removeEntity(Department obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
-		//Verific se o botão clicado foi o OK
-		if(result.get() == ButtonType.OK) {
+		// Verific se o botão clicado foi o OK
+		if (result.get() == ButtonType.OK) {
 			try {
 				service.removeEntity(obj);
-				updateTableView(); //Atualiza o grid
-			}
-			catch(DbIntegrityException dbi) {
+				updateTableView(); // Atualiza o grid
+			} catch (DbIntegrityException dbi) {
 				Alerts.showAlert("Error removing alert", null, dbi.getMessage(), AlertType.ERROR);
 			}
 		}
-				
+
 	}
 
 }

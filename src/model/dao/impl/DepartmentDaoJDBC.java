@@ -12,6 +12,7 @@ import java.util.Map;
 
 import db.DB;
 import db.DBException;
+import db.DbIntegrityException;
 import model.application.Department;
 import model.application.Seller;
 import model.dao.DepartmentDao;
@@ -172,7 +173,7 @@ public class DepartmentDaoJDBC implements DepartmentDao{
 			
 		}
 		catch(SQLException ex) {
-			ex.printStackTrace();
+			throw new DbIntegrityException(ex.getMessage());
 		}
 		finally{
 			DB.closeStatement(st);
