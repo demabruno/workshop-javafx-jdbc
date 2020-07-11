@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.application.Department;
 import model.entities.DepartmentService;
+import model.entities.SellerService;
 
 public class MainViewController implements Initializable {
 
@@ -31,7 +32,12 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemAbout;
 
 	public void onMenuItemSellerAction() {
-		System.out.println("Seller");
+		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
+			//--> Injeta dependência;
+			controller.setSellerService(new SellerService()); 
+			//--> objeto do tipo controller acessa método da departmentService
+			controller.updateTableView(); 
+		});
 	}
 	
 	/*
